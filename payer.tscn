@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://dp3to77ysgy5d"]
+
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="1_o8mi0"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="1_op5ga"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="2_swcsk"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="3_rp23m"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="4_5i7de"]
+
+[sub_resource type="Environment" id="Environment_dstm6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1siol"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pd4mr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41adx"]
+
+[node name="payer" type="Node3D"]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+environment = SubResource("Environment_dstm6")
+
+[node name="Right" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+tracker = &"right_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/Right"]
+transform = Transform3D(0.025, 0, 0, 0, 0.1, 0, 0, 0, 0.15, 0, 0, 0)
+mesh = SubResource("BoxMesh_1siol")
+
+[node name="MovementDirect" parent="XROrigin3D/Right" instance=ExtResource("1_o8mi0")]
+
+[node name="MovementTurn" parent="XROrigin3D/Right" instance=ExtResource("2_swcsk")]
+turn_mode = 2
+
+[node name="FunctionPickup" parent="XROrigin3D/Right" instance=ExtResource("3_rp23m")]
+grab_distance = 0.1
+
+[node name="FunctionPointer" parent="XROrigin3D/Right" instance=ExtResource("4_5i7de")]
+show_laser = 0
+laser_length = 1
+show_target = true
+
+[node name="Left" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+tracker = &"left_hand"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="XROrigin3D/Left"]
+transform = Transform3D(0.025, 0, 0, 0, 0.1, 0, 0, 0, 0.15, 0, 0, 0)
+mesh = SubResource("BoxMesh_pd4mr")
+skeleton = NodePath("../../Right")
+
+[node name="FunctionPickup" parent="XROrigin3D/Left" instance=ExtResource("3_rp23m")]
+grab_distance = 0.1
+
+[node name="FunctionPointer" parent="XROrigin3D/Left" instance=ExtResource("4_5i7de")]
+show_laser = 0
+laser_length = 1
+show_target = true
+
+[node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("1_op5ga")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/PlayerBody"]
+shape = SubResource("CapsuleShape3D_41adx")

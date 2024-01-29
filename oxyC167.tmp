@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddxegnyk28xfu"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_7q8o6"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_rdx4u"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_oyrxk"]
+[ext_resource type="Script" path="res://collider.gd" id="4_b7jej"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_afpmx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_54qm7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tc02o"]
+albedo_color = Color(0.658824, 0, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_12g20"]
+
+[node name="PickableObject" instance=ExtResource("1_7q8o6")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+shape = SubResource("SphereShape3D_afpmx")
+
+[node name="Atom" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_54qm7")
+surface_material_override/0 = SubResource("StandardMaterial3D_tc02o")
+
+[node name="GrabPointHandLeft" parent="." index="2" instance=ExtResource("2_rdx4u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0)
+editor_preview_mode = 1
+
+[node name="GrabPointHandRight" parent="." index="3" instance=ExtResource("3_oyrxk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0, 0)
+editor_preview_mode = 1
+
+[node name="Area3D" type="Area3D" parent="." index="4" groups=["AtomCollide"]]
+script = ExtResource("4_b7jej")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+shape = SubResource("SphereShape3D_12g20")
+
+[connection signal="dropped" from="." to="." method="_on_dropped"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="on_collide" from="Area3D" to="." method="_no_link"]

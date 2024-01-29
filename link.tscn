@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://8c6lg3im3r5s"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sm20e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76gsu"]
+transparency = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(0.02, 0, 0, 0, 0.1, 0, 0, 0, 0.02, 0, 0, 0)
+mesh = SubResource("CylinderMesh_sm20e")
+surface_material_override/0 = SubResource("StandardMaterial3D_76gsu")
