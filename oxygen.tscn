@@ -15,7 +15,7 @@ albedo_color = Color(0.658824, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_12g20"]
 
-[node name="PickableObject" instance=ExtResource("1_7q8o6")]
+[node name="PickableObject" groups=["Atom"] instance=ExtResource("1_7q8o6")]
 link_scene = ExtResource("2_cbdbt")
 
 [node name="CollisionShape3D" parent="." index="0"]

@@ -40,7 +40,6 @@ grab_distance = 0.1
 [node name="FunctionPointer" parent="XROrigin3D/Right" instance=ExtResource("4_5i7de")]
 show_laser = 0
 laser_length = 1
-show_target = true
 
 [node name="Left" type="XRController3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
